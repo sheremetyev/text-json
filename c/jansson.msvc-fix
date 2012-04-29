@@ -1,0 +1,5 @@
+
+#if _MSC_VER
+#define snprintf _snprintf
+#define strtoll _strtoi64
+#endif
