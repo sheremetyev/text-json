@@ -22,8 +22,9 @@ Hello **World!**
 Format Description
 ------------------
 
-Text JSON is a valid JSON and valid JsonML (<http://jsonml.org/>) with the
-following restrictions.
+Text JSON is a valid JSON and valid [JsonML] with the following restrictions.
+
+[JsonML]: <http://en.wikipedia.org/wiki/JsonML>
 
   * Root element is named "text".
 
