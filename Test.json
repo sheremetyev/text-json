@@ -1,0 +1,6 @@
+["text",
+  ["heading", { "level": 1 },
+    ["plain", "Hello "],
+    ["emph", "World!"]
+  ]
+]
