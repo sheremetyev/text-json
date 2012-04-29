@@ -38,8 +38,7 @@ following restrictions.
 
   * Data is encoded as UTF-8.
 
-Block Types
-~~~~~~~~~~~
+### Block Types
 
   * "heading" — headings of different levels.
 
@@ -49,8 +48,7 @@ Block Types
 
   * "verbatim" — verbatim text block.
 
-Span Types
-~~~~~~~~~~
+### Span Types
 
   * "plain" — plain text.
 
