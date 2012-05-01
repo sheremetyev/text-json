@@ -1,28 +1,27 @@
-Text JSON
-=========
+TextJSON
+========
 
-Text JSON is a format for text that is richer then plain text but convenient to
+TextJSON is a format for text that is richer then plain text but convenient to
 work with. It is inspired by JsonML and Markdown. The following snippet shows an
-example of Text JSON data.
+example of TextJSON data.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ["text",
-  ["heading", { "level": 1 },
+  ["para", { "level": 0 },
     ["plain", "Hello "],
     ["emph", "World!"]
   ]
 ]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It represents the following header text.
+It represents the following text.
 
 Hello **World!**
-================
 
 Format Description
 ------------------
 
-Text JSON is a valid JSON and valid [JsonML] with the following restrictions.
+TextJSON is valid JSON and valid [JsonML] with additional requirements.
 
 [JsonML]: <http://en.wikipedia.org/wiki/JsonML>
 
@@ -49,6 +48,10 @@ Text JSON is a valid JSON and valid [JsonML] with the following restrictions.
 
   * "verbatim" — verbatim text block.
 
+  * "labels" — additional attributed for the following paragraph.
+
+  * "note" — a footnote.
+
 ### Span Types
 
   * "plain" — plain text.
@@ -59,12 +62,90 @@ Text JSON is a valid JSON and valid [JsonML] with the following restrictions.
 
   * "strong" — strongly emphasised text.
 
-  * "link" — link text.
+  * "url" — link URL.
+
+  * "linktext" — text to be shown instead of the URL.
 
   * "code" — verbatim text span.
+
+  * "label" — marker for a block.
+
+  * "ref" — reference to a label.
+
+
+### Referencing
+
+Most of the text in documents is linear — sequential paragraphs. This maps
+perfectly into the two-level structure of blocks and spans in TextJSON.
+
+But there are a few common cases where more complex structure is required —
+links, footnotes and cross-references. TextJSON deals with these case by
+introducing a level of indirection as Markdown and LaTeX do.
+
+Labels can be assigned to a paragraph and then referred to from another place.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+["text",
+  ["para", {},
+    ["plain", "It is mentioned"],
+    ["ref", "mynote"],
+    ["plain", " in a footnote."],
+  ],
+  ["labels", {},
+    ["label", "mynote"]
+  ],
+  ["note", {},
+    ["plain", "This is a footnote."]
+  ]
+]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Blocks with notes can be placed anywhere in the text. When converted to other
+formats (HTML, PDF, etc.) they will be pulled out from that location and placed
+accordingly to the destination format rules.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+["text",
+  ["para", {},
+    ["plain", "See picture "],
+    ["ref", "myimage"],
+    ["plain", " for example."],
+  ],
+  ["labels", {},
+    ["label", "myimage"],
+  ],
+  ["image", {},
+    ["url", "picture.jpg"]
+    ["plain", "Alternative text for image."]
+  ]
+  ["description", {},
+    ["plain", "Figure title."]
+  ]
+]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The same mechanism can be used for links with alternative text.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+["text",
+  ["para", {},
+    ["plain", "See "],
+    ["linktext", "my web site"]
+    ["ref", "mysite"],
+    ["plain", " for details."],
+  ],
+  ["labels", {},
+    ["label", "mysite"],
+  ],
+  ["link", {},
+    ["url", "http://mywebsite.com"],
+    ["plain", "Alternative text for the link."]
+  ]
+]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Code Samples
 ------------
 
-This repository provides several code samples working with Text JSON format in
+This repository provides several code samples working with TextJSON format in
 different programming languages.
