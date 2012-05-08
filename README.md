@@ -44,13 +44,21 @@ TextJSON is valid JSON and valid [JsonML] with additional requirements.
 
   * "para" — plain text paragraph.
 
-  * "listitem" — bulleted list item.
+  * "item" — bulleted or numbered list item or table cell.
 
   * "verbatim" — verbatim text block.
 
-  * "labels" — additional attributed for the following paragraph.
-
   * "note" — a footnote.
+
+  * "link" — external link definition, with alternative text.
+
+  * "image" — link to a PNG or JPEG file.
+
+  * "description" — a title for image, table, verbatim block or formula.
+
+  * "displaymath" — a formula.
+
+  * "divider" — a horizontal line.
 
 ### Span Types
 
@@ -62,15 +70,17 @@ TextJSON is valid JSON and valid [JsonML] with additional requirements.
 
   * "strong" — strongly emphasised text.
 
-  * "url" — link URL.
+  * "url" — an URL.
 
-  * "linktext" — text to be shown instead of the URL.
+  * "linktext" — text to be shown instead of URL or reference.
 
   * "code" — verbatim text span.
 
   * "label" — marker for a block.
 
   * "ref" — reference to a label.
+
+  * "math" - an inlinde formula.
 
 
 ### Referencing
@@ -91,10 +101,8 @@ Labels can be assigned to a paragraph and then referred to from another place.
     ["ref", "mynote"],
     ["plain", " in a footnote."],
   ],
-  ["labels", {},
-    ["label", "mynote"]
-  ],
   ["note", {},
+    ["label", "mynote"],
     ["plain", "This is a footnote."]
   ]
 ]
@@ -111,10 +119,8 @@ accordingly to the destination format rules.
     ["ref", "myimage"],
     ["plain", " for example."],
   ],
-  ["labels", {},
-    ["label", "myimage"],
-  ],
   ["image", {},
+    ["label", "myimage"],
     ["url", "picture.jpg"]
     ["plain", "Alternative text for image."]
   ]
@@ -134,10 +140,8 @@ The same mechanism can be used for links with alternative text.
     ["ref", "mysite"],
     ["plain", " for details."],
   ],
-  ["labels", {},
-    ["label", "mysite"],
-  ],
   ["link", {},
+    ["label", "mysite"],
     ["url", "http://mywebsite.com"],
     ["plain", "Alternative text for the link."]
   ]
