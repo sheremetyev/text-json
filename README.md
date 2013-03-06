@@ -21,67 +21,66 @@ Hello **World!**
 Format Description
 ------------------
 
-TextJSON is valid JSON and valid [JsonML] with additional requirements.
+TextJSON is valid JSON and valid [JsonML][1] with additional requirements.
 
-[JsonML]: <http://en.wikipedia.org/wiki/JsonML>
+[1]: <http://en.wikipedia.org/wiki/JsonML>
 
-  * Root element is named "text".
+-   Root element is named "text".
 
-  * There are always two levels of hierarchy: blocks and spans.
+-   There are always two levels of hierarchy: blocks and spans.
 
-  * Block elements have attributes, even if empty.
+-   Block elements have attributes, even if empty.
 
-  * Span elements have exactly one string content element and do not have
+-   Span elements have exactly one string content element and do not have
     attributes.
 
-  * Block and span element types must be chosen from the following lists.
+-   Block and span element types must be chosen from the following lists.
 
-  * Data is encoded as UTF-8.
+-   Data is encoded as UTF-8.
 
 ### Block Types
 
-  * "heading" — headings of different levels.
+-   "heading" — headings of different levels.
 
-  * "para" — plain text paragraph.
+-   "para" — plain text paragraph.
 
-  * "item" — bulleted or numbered list item or table cell.
+-   "item" — bulleted or numbered list item or table cell.
 
-  * "verbatim" — verbatim text block.
+-   "verbatim" — verbatim text block.
 
-  * "note" — a footnote.
+-   "note" — a footnote.
 
-  * "link" — external link definition, with alternative text.
+-   "link" — external link definition, with alternative text.
 
-  * "image" — link to a PNG or JPEG file.
+-   "image" — link to a PNG or JPEG file.
 
-  * "description" — a title for image, table, verbatim block or formula.
+-   "description" — a title for image, table, verbatim block or formula.
 
-  * "displaymath" — a formula.
+-   "displaymath" — a formula.
 
-  * "divider" — a horizontal line.
+-   "divider" — a horizontal line.
 
 ### Span Types
 
-  * "plain" — plain text.
+-   "plain" — plain text.
 
-  * "break" — line break (contents is always CR symbol).
+-   "break" — line break (contents is always CR symbol).
 
-  * "emph" — emphasised text.
+-   "emph" — emphasised text.
 
-  * "strong" — strongly emphasised text.
+-   "strong" — strongly emphasised text.
 
-  * "url" — an URL.
+-   "url" — an URL.
 
-  * "linktext" — text to be shown instead of URL or reference.
+-   "linktext" — text to be shown instead of URL or reference.
 
-  * "code" — verbatim text span.
+-   "code" — verbatim text span.
 
-  * "label" — marker for a block.
+-   "label" — marker for a block.
 
-  * "ref" — reference to a label.
+-   "ref" — reference to a label.
 
-  * "math" - an inlinde formula.
-
+-   "math" - an inlinde formula.
 
 ### Referencing
 
