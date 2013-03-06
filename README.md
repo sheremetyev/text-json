@@ -1,154 +1,114 @@
 TextJSON
 ========
 
-TextJSON is a format for text that is richer then plain text but convenient to
-work with. It is inspired by JsonML and Markdown. The following snippet shows an
-example of TextJSON data.
+TextJSON (version 2) is a format for representation of rich text that can be
+saved as plain text with Markdown markup. The main principles are.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-["text",
-  ["para", { "level": 0 },
-    ["plain", "Hello "],
-    ["emph", "World!"]
-  ]
-]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-   Content is sequential and semantically has only 1 level—paragraphs.
 
-It represents the following text.
+-   Each paragraph can have several attributes to reflect its style.
 
-Hello **World!**
+-   Hierarchical structure of the text is represented by “levels” of paragraphs
+    that correspond to indentation.
 
-Format Description
-------------------
+-   Runs of characters (spans) inside a paragraph can have different styles.
 
-TextJSON is valid JSON and valid [JsonML][1] with additional requirements.
+-   Non-linear structure is represented by assigning IDs to paragraphs and
+    referring to them.
 
-[1]: <http://en.wikipedia.org/wiki/JsonML>
+A bit more details.
 
--   Root element is named "text".
+-   Text extracted from all spans of all paragraphs gives whole content of the
+    document without any formatting.
 
--   There are always two levels of hierarchy: blocks and spans.
+-   Editor can use some of paragraph or span styles to customize the
+    presentation of the text.
 
--   Block elements have attributes, even if empty.
+-   Each paragraph is considered a child of the nearest preceding paragraph with
+    lower level. Main text is at level 0. Headings have negative levels. Top
+    list items are at the main text level.
 
--   Span elements have exactly one string content element and do not have
-    attributes.
+-   Spans with the same set of styles can be joined without changing semantics.
+    When they need to be separated, an empty span with no styles can be
+    inserted.
 
--   Block and span element types must be chosen from the following lists.
+-   Hierarchical structure of spans cannot be represented.
 
--   Data is encoded as UTF-8.
+-   Line break inside paragraph is just a character.
 
-### Block Types
+Below are examples of different types of content in TextJSON format.
 
--   "heading" — headings of different levels.
+Plain Paragraph
+---------------
 
--   "para" — plain text paragraph.
+Emphasis
+--------
 
--   "item" — bulleted or numbered list item or table cell.
+Heading
+-------
 
--   "verbatim" — verbatim text block.
+Lists
+-----
 
--   "note" — a footnote.
+Code
+----
 
--   "link" — external link definition, with alternative text.
+Code block should not contain styled spans.
 
--   "image" — link to a PNG or JPEG file.
+Math
+----
 
--   "description" — a title for image, table, verbatim block or formula.
+Figure
+------
 
--   "displaymath" — a formula.
+With captions.
 
--   "divider" — a horizontal line.
+Table
+-----
 
-### Span Types
+With captions.
 
--   "plain" — plain text.
+Footnote
+--------
 
--   "break" — line break (contents is always CR symbol).
+Hyperlink
+---------
 
--   "emph" — emphasised text.
+Bare URL or hyperlink with text.
 
--   "strong" — strongly emphasised text.
+Citation
+--------
 
--   "url" — an URL.
+Cross-reference
+---------------
 
--   "linktext" — text to be shown instead of URL or reference.
+Displays chapter/figure/table number.
 
--   "code" — verbatim text span.
+Quotation
+---------
 
--   "label" — marker for a block.
+Author and source of quotation.
 
--   "ref" — reference to a label.
+Term Definition
+---------------
 
--   "math" - an inlinde formula.
+External File
+-------------
 
-### Referencing
+External code files and document includes.
 
-Most of the text in documents is linear — sequential paragraphs. This maps
-perfectly into the two-level structure of blocks and spans in TextJSON.
+Comment
+-------
 
-But there are a few common cases where more complex structure is required —
-links, footnotes and cross-references. TextJSON deals with these case by
-introducing a level of indirection as Markdown and LaTeX do.
+Comments are used for collaboration on the content and are not included in the
+final document.
 
-Labels can be assigned to a paragraph and then referred to from another place.
+Metadata
+--------
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-["text",
-  ["para", {},
-    ["plain", "It is mentioned"],
-    ["ref", "mynote"],
-    ["plain", " in a footnote."],
-  ],
-  ["note", {},
-    ["label", "mynote"],
-    ["plain", "This is a footnote."]
-  ]
-]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Authors, title, subtitle, date of the document etc.
 
-Blocks with notes can be placed anywhere in the text. When converted to other
-formats (HTML, PDF, etc.) they will be pulled out from that location and placed
-accordingly to the destination format rules.
+Insert
+------
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-["text",
-  ["para", {},
-    ["plain", "See picture "],
-    ["ref", "myimage"],
-    ["plain", " for example."],
-  ],
-  ["image", {},
-    ["label", "myimage"],
-    ["url", "picture.jpg"]
-    ["plain", "Alternative text for image."]
-  ]
-  ["description", {},
-    ["plain", "Figure title."]
-  ]
-]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The same mechanism can be used for links with alternative text.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-["text",
-  ["para", {},
-    ["plain", "See "],
-    ["linktext", "my web site"]
-    ["ref", "mysite"],
-    ["plain", " for details."],
-  ],
-  ["link", {},
-    ["label", "mysite"],
-    ["url", "http://mywebsite.com"],
-    ["plain", "Alternative text for the link."]
-  ]
-]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Code Samples
-------------
-
-This repository provides several code samples working with TextJSON format in
-different programming languages.
+Sequences of paragraphs styled differently from the main text.
