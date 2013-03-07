@@ -97,6 +97,20 @@ Plain ***heavy*** plain again.
 Heading
 -------
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[
+  { "Tags" : [ "heading" ],
+    "Level": -3,
+    "Spans": [ { "Text": "Chapter Name" } ]
+  }
+]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Chapter Name
+============
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Lists
 -----
 
@@ -116,7 +130,8 @@ With captions.
 Table
 -----
 
-With captions.
+With captions, header rows and columns, footer rows, joined cells, multiple
+paragraphs in a cell.
 
 Footnote
 --------
